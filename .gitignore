@@ -1,0 +1,9 @@
+target/
+node_modules/
+/models/
+/js/pkg/
+/js/dist/
+/js/node_modules/
+/samples/
+.venv/
+*.part

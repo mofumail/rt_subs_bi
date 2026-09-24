@@ -1,0 +1,55 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+  :root { color-scheme: light dark; --fg:#1b1b1b; --bg:#fbfbfb; --muted:#6b6b6b; --line:#dcdcdc; --accent:#c4302b; }
+  @media (prefers-color-scheme: dark) { :root { --fg:#ececec; --bg:#232326; --muted:#a0a0a0; --line:#3a3a3e; --accent:#ff5a4f; } }
+  body { margin:0; width:320px; font:13px/1.45 system-ui, sans-serif; color:var(--fg); background:var(--bg); }
+  main { padding:14px; display:grid; gap:10px; }
+  button#toggle { font:600 14px system-ui; padding:9px; border-radius:6px; border:0; background:var(--accent); color:#fff; cursor:pointer; }
+  button#toggle.on { background:transparent; color:var(--accent); border:1.5px solid var(--accent); }
+  #state { color:var(--muted); min-height:1.4em; }
+  details { border-top:1px solid var(--line); padding-top:8px; }
+  summary { cursor:pointer; color:var(--muted); }
+  label { display:grid; gap:3px; margin-top:8px; color:var(--muted); font-size:12px; }
+  label.row { grid-template-columns:auto 1fr; align-items:center; gap:8px; }
+  input[type=text], select, textarea { font:13px system-ui; padding:5px 6px; border:1px solid var(--line); border-radius:4px; background:transparent; color:var(--fg); }
+  textarea { resize:vertical; min-height:3.2em; }
+</style>
+</head>
+<body>
+<main>
+  <button id="toggle">Start subtitles</button>
+  <div id="state"></div>
+  <label>Context prompt (streamer name, recurring terms)
+    <textarea id="prompt" placeholder="e.g. Pekora, Hololive, Minecraft"></textarea>
+  </label>
+  <label class="row"><input type="checkbox" id="showTentative"> Show predicted continuation (dimmed)</label>
+  <details>
+    <summary>Engine</summary>
+    <label>Engine
+      <select id="engine">
+        <option value="auto">Auto (WebGPU, else local engine)</option>
+        <option value="browser">In-browser (WebGPU)</option>
+        <option value="local">Local engine (npm run engine)</option>
+      </select>
+    </label>
+    <label>Model size (in-browser)
+      <select id="quality">
+        <option value="small">Small — 4-bit, ~530 MB</option>
+        <option value="quality">Quality — fp16, ~1.5 GB, lower lag</option>
+      </select>
+    </label>
+    <label>Latency ↔ accuracy (AlignAtt frames, 20 ms each)
+      <input type="range" id="frameThreshold" min="10" max="50" step="5">
+    </label>
+    <label>Subtitle size <input type="range" id="fontScale" min="0.6" max="1.8" step="0.1"></label>
+    <label>Local engine URL <input type="text" id="localUrl"></label>
+    <label>Model base URL <input type="text" id="modelBase"></label>
+    <label>Model id <input type="text" id="modelId"></label>
+  </details>
+</main>
+<script src="popup.js"></script>
+</body>
+</html>

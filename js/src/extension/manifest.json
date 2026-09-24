@@ -1,0 +1,51 @@
+{
+  "manifest_version": 2,
+  "name": "rt-subs: live JP→EN subtitles",
+  "version": "0.1.0",
+  "description": "Real-time Japanese→English subtitles for YouTube streams (Silero VAD + kotoba-whisper-bilingual + AlignAtt), on-device.",
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "rt-subs@local",
+      "strict_min_version": "128.0",
+      "data_collection_permissions": {
+        "required": [
+          "none"
+        ]
+      }
+    }
+  },
+  "icons": {
+    "48": "icon.svg",
+    "96": "icon.svg"
+  },
+  "permissions": [
+    "storage",
+    "activeTab",
+    "*://*.youtube.com/*",
+    "https://huggingface.co/*",
+    "https://*.hf.co/*",
+    "http://127.0.0.1/*",
+    "http://localhost/*"
+  ],
+  "background": {
+    "page": "background.html",
+    "persistent": true
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "*://*.youtube.com/*"
+      ],
+      "js": [
+        "content.js"
+      ],
+      "run_at": "document_idle"
+    }
+  ],
+  "browser_action": {
+    "default_title": "Live JP→EN subtitles",
+    "default_popup": "popup.html",
+    "default_icon": "icon.svg"
+  },
+  "content_security_policy": "script-src 'self' 'wasm-unsafe-eval'; object-src 'self'"
+}

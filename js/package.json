@@ -1,0 +1,27 @@
+{
+  "name": "rt-subs",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Real-time JP->EN subtitles for YouTube streams (Silero VAD + kotoba-whisper-bilingual + AlignAtt)",
+  "scripts": {
+    "wasm": "cd ../rt_subs && RUSTFLAGS='-C target-feature=+simd128' wasm-pack build --target web --release --out-dir ../js/pkg/rt_subs",
+    "cli": "node src/node/cli.ts",
+    "build:ext": "node scripts/build-extension.ts",
+    "typecheck": "tsc --noEmit",
+    "engine": "node src/node/server.ts",
+    "build": "npm run wasm && node scripts/build-extension.ts",
+    "ext": "web-ext run -s dist/firefox",
+    "lint:ext": "web-ext lint -s dist/firefox"
+  },
+  "dependencies": {
+    "@huggingface/transformers": "^4.3.0"
+  },
+  "devDependencies": {
+    "@types/firefox-webext-browser": "^143.0.0",
+    "@types/node": "^24",
+    "esbuild": "latest",
+    "typescript": "^5",
+    "web-ext": "^10.6.0"
+  }
+}
